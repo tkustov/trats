@@ -1,0 +1,2 @@
+# trats
+TypeScript traits implementation
