@@ -1,0 +1,39 @@
+{
+  "name": "trats",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "TypeScript trait implementation",
+  "main": "lib/trait.js",
+  "exports": {
+    ".": {
+      "types": "./src/trait.ts",
+      "import": "./lib/trait.js"
+    }
+  },
+  "scripts": {
+    "pretest": "npm run build",
+    "test": "node --test",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tkustov/trats.git"
+  },
+  "keywords": [
+    "typescript",
+    "trait"
+  ],
+  "author": "Taras Kustov <tkusto@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tkustov/trats/issues"
+  },
+  "homepage": "https://github.com/tkustov/trats#readme",
+  "devDependencies": {
+    "@types/node": "^22.5.1",
+    "typescript": "^5.5.4"
+  },
+  "peerDependencies": {
+    "prettier": "^3.3.3"
+  }
+}

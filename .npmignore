@@ -1,0 +1,4 @@
+.prettierrc.toml
+tsconfig.json
+lib/*.test.js
+src/*.test.ts
