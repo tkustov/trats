@@ -1,6 +1,6 @@
-import { Trait, TraitInstance } from './trait.js';
 import assert from 'node:assert';
-import { describe, test, beforeEach } from 'node:test';
+import { beforeEach, describe, test } from 'node:test';
+import { Trait, TraitInstance } from './trait.js';
 
 describe('Trait', () => {
   type TraitTarget = { name: string };
@@ -36,7 +36,7 @@ describe('Trait', () => {
   });
 
   test('Basic Trait Application', () => {
-    Animal.impl(Dog);
+    Animal.implFor(Dog);
     const dog = new Dog('Jack');
 
     const animalTrait = Animal(dog);
@@ -45,7 +45,7 @@ describe('Trait', () => {
   });
 
   test('Custom Trait Implementation', () => {
-    Animal.impl(Cat, cat => ({
+    Animal.implFor(Cat, cat => ({
       make_sound: () => `${cat.name} meows!`
     }));
   
@@ -57,8 +57,8 @@ describe('Trait', () => {
   });
 
   test('Multiple Traits per Class', () => {
-    Animal.impl(Dog);
-    CanSwim.impl(Dog);
+    Animal.implFor(Dog);
+    CanSwim.implFor(Dog);
     const dog = new Dog('Jack');
   
     const animalTrait = Animal(dog);
@@ -81,13 +81,20 @@ describe('Trait', () => {
   });
 
   test('Trait Presence Check', () => {
-    assert(!Animal.has(Dog), 'Dog should not have the Animal trait');
-    assert(!CanSwim.has(Dog), 'Dog should not have the CanSwim trait');
-    Animal.impl(Dog);
-    CanSwim.impl(Dog);
-    assert(Animal.has(Dog), 'Dog should have the Animal trait');
-    assert(CanSwim.has(Dog), 'Dog should have the CanSwim trait');
-    assert(!Animal.has(Cat), 'Cat should not have the Animal trait until it is applied');
-    assert(!CanSwim.has(Cat), 'Cat should not have the CanSwim trait');
+    assert(!Animal.hasImplFor(Dog), 'Dog should not have the Animal trait');
+    assert(!CanSwim.hasImplFor(Dog), 'Dog should not have the CanSwim trait');
+    Animal.implFor(Dog);
+    CanSwim.implFor(Dog);
+    assert(Animal.hasImplFor(Dog), 'Dog should have the Animal trait');
+    assert(CanSwim.hasImplFor(Dog), 'Dog should have the CanSwim trait');
+    assert(!Animal.hasImplFor(Cat), 'Cat should not have the Animal trait until it is applied');
+    assert(!CanSwim.hasImplFor(Cat), 'Cat should not have the CanSwim trait');
+  });
+
+  test('Trait Unsafe Binding', () => {
+    assert.throws(() => {
+      Animal.unsafe(null).make_sound();
+    });
+    assert.strictEqual(Animal.unsafe({ name: 'Cody' }).make_sound(), 'Cody aaa!')
   });
 });
