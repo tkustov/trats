@@ -13,7 +13,9 @@
   "scripts": {
     "pretest": "npm run build",
     "test": "node --test",
-    "build": "tsc"
+    "prebuild": "rm -rf ./lib",
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
